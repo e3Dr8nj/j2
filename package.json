@@ -17,9 +17,7 @@
     "discord.js": "^11.4.2",
     "xmldom": "^0.1.27"
   },
-  "engines": {
-    "node": "8.x"
-  },
+  "engines": { "node": "9.10.1"},
   "repository": {
     "url": "https://glitch.com/edit/#!/hello-sqlite"
   },

@@ -201,13 +201,13 @@ exports.run = (client, message,args) => {
   };  //async end
   async function typing_delay(msg,obj,delay_time){
             if(obj&&obj.o){await message.react(obj.o)};
-            if(obj&&obj.e && module.exports.system.EMOJI_NAME[message.guild.id]){
-                  let arr_emoji = module.exports.system.EMOJI_NAME[message.guild.id][obj.e];
+            if(obj&&obj.e && module.exports.system.EMOJI_NAME[message.guild.id]&&module.exports.system.EMOJI_NAME[message.guild.id][obj.e.toUpperCase()]){
+                  let arr_emoji = module.exports.system.EMOJI_NAME[message.guild.id][obj.e.toUpperCase()];
                   let index = (obj.v)?obj.v:await get_rnd(arr_emoji);
                   let emoji_name = await arr_emoji[index];
                  // let emoji_name = await arr_emoji[await get_rnd(arr_emoji)];
                   console.log(emoji_name);
-                  let emoji= message.guild.emojis.find('name',emoji_name);
+                  let emoji= message.guild.emojis.find(x=>x.name===emoji_name);
                   (emoji)?{}:client.emojis.get(emoji_name);  
                   if(emoji) await message.react(emoji.id);
             };
@@ -229,7 +229,7 @@ exports.run = (client, message,args) => {
                let msg2= await message.channel.send(answer);
            }else { let msg2= await message.channel.send(member+' '+answer); };
            
-          // await message.react(message.guild.emojis.find('name',module.exports.system.EMOJI_NAME.S).id);
+          // await message.react(message.guild.emojis.find(x=>x.name===module.exports.system.EMOJI_NAME.S).id);
             await channel.stopTyping();      
             if(serial){return typing_delay(obj.s[await get_rnd(obj.s)],obj);};   
             return;
@@ -374,7 +374,7 @@ await msg.delete();
                                 console.log(!!cnl1);
                     }else{
                                 console.log('try get channel by  name');
-                                cnl1 = message.guild.channels.find('name',cnl_val);
+                                cnl1 = message.guild.channels.find(x => x.name === cnl_val);
                                 console.log(!!cnl1);
 
                      };
@@ -487,6 +487,7 @@ try{
 };
 //---------------------
 exports.getMind=async()=>{
+try{
       const fs = require('fs');
       const JXON = require('jxon');
       const DOMParser=require('xmldom').DOMParser;
@@ -498,9 +499,12 @@ exports.getMind=async()=>{
   var myObject = JXON.build(xmlDoc);
       
       let obj_arr=myObject.triggers.trigger;
+        //console.log(obj_arr);
       obj_arr.map(e=>{
-          
+          //console.log(e);
          for(var key in e){
+          if(typeof e[key]=='number'){e[key]=e[key].toString(); console.log(e[key]);};
+           //if(!e[key]||[key]==''|| e[key]==' '){e[key]='undefined';};
            if(key=="w"){ if(e[key].endsWith('.')){e[key]=e[key].slice(0,-1);}; e[key]=e[key].split(",")};
            if(key=="a"){ if(e[key].endsWith('.')){e[key]=e[key].slice(0,-1);}; e[key]=e[key].split(",")};
            if(key=="q"){ if(e[key].endsWith('.')){e[key]=e[key].slice(0,-1);}; e[key]=e[key].split(",")};
@@ -516,11 +520,17 @@ exports.getMind=async()=>{
          };
       });
     //console.log(obj_arr);
+     obj_arr=obj_arr.filter(e=>e.type!='off');
    return obj_arr;
+}catch(err){console.log(err);};
 };//getMind end
     
 
 //------------------------------add end
+
+
+
+
 
 
 

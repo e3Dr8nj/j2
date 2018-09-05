@@ -10,7 +10,7 @@ app.get("/", (request, response) => {
 
 app.listen(process.env.PORT);
 setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+ // http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
 }, 280000);
 const Discord = require("discord.js");
 const client = new Discord.Client();
@@ -58,22 +58,7 @@ try{
   async function ins(){
    let obj=request.body[0];
   let obj2=request.body;
-/*  
-  const mindBD=require('./modules/mindBD.js');
-   await mindBD.drop();
-  
-  let id = "1";
- // let w = request.body.textarea.n;
- // let r = request.body.textarea.n;
- 
-  //let str = mindBD.run(obj);
- 
- for(let key in obj2){
-   await mindBD.run(obj2[key]); console.log(obj2[key]);
- };
-    await mindBD.show_table();
-   //console.log(request.body[0]);
-   */
+
     let res= await createXML(obj2);
     response.send("<style>h1 {color:red;}p {color:blue;}</style><p>Изменения сохранены</p>");
     
@@ -86,13 +71,7 @@ try{
 }catch(err){console.log(err);};  
 
 });//post  end
-// listen for requests :)
-/*
-var listener = app.listen(process.env.PORT, function() {
-  console.log('Your app is listening on port ' + listener.address().port);
-});
 
-*/
 
 
 
@@ -105,15 +84,17 @@ var listener = app.listen(process.env.PORT, function() {
 async function createXML(obj2){
   let res="";
    let str_xml='<?xml version="1.0" encoding="UTF-8"?>\n';
-
-  str_xml+='<triggers>\n';
-  
+  var d=new Date();
+  str_xml+='<triggers data="'+d.toString()+'">\n';
   
   for(let key2 in obj2){
     if(key2=="avtorization"){continue;};
+    
     let obj=obj2[key2];
+    if(obj.type=='del'){continue;};
+    if((obj.w==''||obj.r==''||obj.w=='undefined'||obj.r=='undefined')&&(!(obj.type=='dq'||obj.type=='ds'))){obj.type='off';};
     str_xml+='<trigger>';
-    for(let key in obj){ str_xml+='<'+key+'>'; str_xml+=obj[key]; str_xml+='</'+key+'>'; };
+    for(let key in obj){ str_xml+='<'+key+'>'; str_xml+=(obj[key]!='')?obj[key]:'undefined'; str_xml+='</'+key+'>'; };
     str_xml+='</trigger>';
     
   };
@@ -124,7 +105,7 @@ await fs.writeFile('./public/triggers.xml', str_xml, function (err) {
    res+=" file save; ";
 });
   //---------------
-  var d=new Date();
+  
   await fs.appendFile('./public/triggers_recovery.xml', "\n"+d.toString()+"\n"+str_xml, function (err) {
   if (err) {console.log(err); res+=err.message;};
   res+=" recovery file add; ";
@@ -164,7 +145,7 @@ client.on("message", (message) => {
    }else if (message.mentions.members.first().user.id==client.user.id)  {
       
         
-      if(message.guild.id=='301063859702071316'){
+      if(message.guild.id=='301063859702071316'||message.guild.id=='476056002391834634'){
         args = message.content.slice().trim().split(/ +/g);
         args[0]='mental';
       };//if ali
