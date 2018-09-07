@@ -56,6 +56,7 @@ li {
 }
 
 li a {
+  font-size:0.9em;
     display: block;
     color: white;
     text-align: center;
@@ -64,7 +65,9 @@ li a {
 }
 
 li a:hover {
-    background-color: #111;
+   color:royalblue;
+  background-color: #23272a;
+  border:none;
 }
 
 footer {
@@ -104,7 +107,13 @@ div{border-top:2px black;}
 .inv2{display:none}
 .bl{
 display:block;
+  font-size: 0.9em;
+  background-color: #23272a;
+  color:#f6f6f7;
+  border-color:#040405;
+  opacity: 0.9;
 }
+.bl:hover{opacity:1.0}
 .il{display:inline;}
 .inl{
   display:inline-block;
@@ -112,11 +121,7 @@ display:block;
 .b_inl{display:inline}
 .a_inl{display:inline}
 .blue{color:#4682b4}
-.submitStick{
-  position:fixed;
-   right:40px;
-  top:70px;
-}
+
 .cont{
   position:relative;
   top:80px;
@@ -134,7 +139,7 @@ position:fixed;
 }
 .fix body{ color: red;}
 select{
-    
+    font-size: 1.1em;
     background: rgba(0,0,0,0.3);
     color:#fff;
     text-shadow:0 1px 0 rgba(0,0,0,0.4);
@@ -144,3 +149,58 @@ select option{
 }
 .emoji{display:none;}
 .time{display:none;}
+.range{  
+  
+    
+    background: #d3d3d3;
+    
+}
+
+
+submit{
+  background-color: black;
+  color:#f6f6f7;
+  border:none;
+}
+submit:hover{
+  color:royalblue;
+  background-color: #23272a;
+  border:none;
+}
+.submit2{
+  background-color: #23272a;
+  color:#f6f6f7;
+  border-color:gray;
+}
+.submit2:hover{
+  color:royalblue;
+  background-color: #23272a;
+  border-color:#23272a;
+}
+.submitStick{
+  position:fixed;
+   right:40px;
+  top:70px;
+ background-color: #23272a;
+  color:#f6f6f7;
+  border-color:gray;
+}
+.submitStick:hover{
+  color:royalblue;
+  background-color: #23272a;
+  border-color:#23272a;
+}
+li button {
+    
+    border:none;
+    background-color:	#0b0e0f;
+  color:#ffffff;
+   
+    text-decoration: none;
+}
+
+li button:hover {
+   color:royalblue;
+  background-color: #23272a;
+  border:none;
+}

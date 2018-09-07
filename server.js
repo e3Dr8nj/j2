@@ -93,6 +93,7 @@ async function createXML(obj2){
   var d=new Date();
   str_xml+='<triggers data="'+d.toString()+'">\n';
   let setting_xml='<settings>\n';
+  console.log(obj2);
   for(let key2 in obj2){
     let obj=obj2[key2];
     if(key2=="emojis"){
@@ -103,8 +104,8 @@ async function createXML(obj2){
        //setting_xml+=obj2[key2]+'</settings>'; 
        setting_xml+=await xml_body(obj,'time');
         };
-     
-    if(!Number(parseInt(key2[0])) ){continue;};
+     if(key2=="a"){setting_xml+='<emojilevel>'+obj[0]+'</emojilevel>';};
+    if(!Number(parseInt(key2[0]))&& key2[0]!='0' ){continue;};
     
     
     if(obj.type=='del'){continue;};

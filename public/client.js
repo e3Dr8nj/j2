@@ -40,7 +40,7 @@ let emoji_select={undefined:"Нету",snob:"Надменность",positive:"�
 function list(tagname,val_obj){
   let str="";
   for(let key in val_obj){
-     str+=val_obj[key]+':<input class="bl" type="textarea" name="'+tagname+'['+key+']"></textarea>';
+     str+=val_obj[key]+':<textarea class="bl"  name="'+tagname+'['+key+']" rows="1" cols="100"></textarea>';
   };
   return str;
 };
@@ -96,7 +96,7 @@ function addTrigger(){
   let prev=document.getElementById('new triggers').innerHTML;
   document.getElementById('new triggers').innerHTML=prev+str;
 };
-var emoji_level={1:"Холоднокровиный(4э)",2:"Адекватный(3э)",3:"Теплый(2э)",4:"Истеричка(1э)",5:"Гиперактивный шизойд(5э)"};
+var emoji_level={1:"Холоднокровный(4э)",2:"Адекватный(3э)",3:"Теплый(2э)",4:"Истеричка(1э)",5:"Гиперактивный шизойд(5э)"};
 function get_e(a){
  return emoji_level[a];
 };
@@ -111,10 +111,11 @@ function generate(obj_arr){
   str2+='<div id="settings">'; 
   str2+='<p id="emoji_p" class="a_inl" onclick="showOnly(id)">&#9998</p>Эмоджи';
   str2+='<p id="time_p" class="a_inl" onclick="showOnly(id)">&#9998</p>Время';
- 
+  str2+='<p id="default_p" class="a_inl" onclick="showOnly(id)">&#9998</p>Дефолт. Триггеры';
+  
   str2+='<br><div id="emoji" class="emoji">';
   str2+=  list('emojis',emoji_select);
-  str2+='Эмоциональность: <input type="range" id="a" name="a" value="3" min="1" max="5">';
+  str2+='Эмоциональность: <input type="range" class="range" id="a" name="a" value="3" min="1" max="5">';
   str2+=' <output name="emoji_x" for="a b"></output>';
   str2+='</div><br>';
   
@@ -126,9 +127,15 @@ function generate(obj_arr){
   str2+='Посылка второй фразы через:<input class="bl" type="textarea" name="time[response2]"></textarea>';
   str2+='</div>';
   
+  str2+='<br><div id="default" class="default">';
+ // str2+=  list('emojis',emoji_select);
+  str2+='Предложения:<textarea class="bl" type="textarea" name="default[ds]"></textarea>';
+  str2+='Вопросы:<textarea class="bl" type="textarea" name="default[dq]"></textarea>';
   str2+='</div><br>';
   
-  str2+=' <input type="button" value="Добавить триггер" onclick="addTrigger()">';
+  str2+='</div><br>';
+  
+  str2+=' <input type="button" class="submit2" value="Добавить триггер" onclick="addTrigger()">';
     str2+='<br><div id="new triggers"></div><br>';
    let i=0;
 obj_arr.map(e=>{
