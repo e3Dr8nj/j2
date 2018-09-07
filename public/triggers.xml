@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<triggers data="Wed Sep 05 2018 21:13:40 GMT+0000 (UTC)">
-<trigger><n>hi</n><e>hello</e><type>on</type><w>привет,здарова,здрав,хай,хеллоу,хой,йоу,мимими,мур</w><q>undefined</q><a>undefined</a><r>#w
-Привет #s
-и тебе #w #s
-
-</r><s>Как твое ничего?
-Как оно?
-А кто ты?
-Я не человек, но спасибо за приветливость., Как поживаешь?
-#m ~kms #u</s></trigger><trigger><n>как_дела</n><e>dzen</e><type>on</type><w> дела .</w><q> как , ? </q><a>undefined</a><r>Пока не родила.Когда рожу, тогда скажу.
+<triggers data="Fri Sep 07 2018 16:56:18 GMT+0000 (UTC)">
+<trigger><n>как_дела</n><e>dzen</e><type>on</type><w> дела .</w><q> как , ? </q><a>undefined</a><r>Пока не родила.Когда рожу, тогда скажу.
 Медитируют
 хз
 Как сажа бела 

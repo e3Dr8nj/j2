@@ -36,7 +36,15 @@ function Obj(e){
   };
 let empty_trigger={n:'',e:'undefined',w:'',q:'',a:'',r:'',s:'',type:'not set'};
 let type_select={off:"Выкл", on:"Вкл",del:"Удалить",ds:"На предложения",dq:"На вопросы"};
-let emoji_select={undefined:"Нету",snob:"Надменность",positive:"Позитив",negative:"Негатив",dzen:"Дзен",thinking:"Задумчивость",hello:"Приветливость"};
+let emoji_select={undefined:"Нету",snob:"Надменность",positive:"Позитив",negative:"Негатив",dzen:"Дзен",thinking:"Задумчивость",hello:"Приветливость",e5:"5э"};
+function list(tagname,val_obj){
+  let str="";
+  for(let key in val_obj){
+     str+=val_obj[key]+':<input class="bl" type="textarea" name="'+tagname+'['+key+']"></textarea>';
+  };
+  return str;
+};
+
 function option_select(selected_key,val_obj){
   let str='<option value="'+selected_key.toLowerCase()+'" selected>'+val_obj[selected_key.toLowerCase()]+'</option>';
   for(let key in val_obj){  
@@ -88,12 +96,39 @@ function addTrigger(){
   let prev=document.getElementById('new triggers').innerHTML;
   document.getElementById('new triggers').innerHTML=prev+str;
 };
+var emoji_level={1:"Холоднокровиный(4э)",2:"Адекватный(3э)",3:"Теплый(2э)",4:"Истеричка(1э)",5:"Гиперактивный шизойд(5э)"};
+function get_e(a){
+ return emoji_level[a];
+};
 function generate(obj_arr){
   let str2='';
-   str2+='<form name="testForm" method="post" action="/addData" target="frame">';
-    str2+=' <input type="submit" value="Submit" class ="submitStick">';
+   str2+='<form name="testForm" method="post" action="/addData" target="frame" oninput="emoji_x.value=get_e(parseInt(a.value))">';
+    //str2+='<form name="testForm" method="post" action="/addData" target="frame" >';
+    
+  str2+=' <input type="submit" value="Submit" class ="submitStick">';
    str2+='<div value="0">Login:<textarea name="avtorization[login]"   rows="1" cols="30">Log</textarea> Password: <textarea name="avtorization[pass]"   rows="1" cols="30">qwerty</textarea></div>';
-    str2+=' <input type="button" value="Добавить триггер" onclick="addTrigger()">';
+    
+  str2+='<div id="settings">'; 
+  str2+='<p id="emoji_p" class="a_inl" onclick="showOnly(id)">&#9998</p>Эмоджи';
+  str2+='<p id="time_p" class="a_inl" onclick="showOnly(id)">&#9998</p>Время';
+ 
+  str2+='<br><div id="emoji" class="emoji">';
+  str2+=  list('emojis',emoji_select);
+  str2+='Эмоциональность: <input type="range" id="a" name="a" value="3" min="1" max="5">';
+  str2+=' <output name="emoji_x" for="a b"></output>';
+  str2+='</div><br>';
+  
+ 
+  
+  
+  str2+='<br><div id="time" class="time">';
+  str2+='Время ответа:<input class="bl" type="textarea" name="time[response]"></textarea>';
+  str2+='Посылка второй фразы через:<input class="bl" type="textarea" name="time[response2]"></textarea>';
+  str2+='</div>';
+  
+  str2+='</div><br>';
+  
+  str2+=' <input type="button" value="Добавить триггер" onclick="addTrigger()">';
     str2+='<br><div id="new triggers"></div><br>';
    let i=0;
 obj_arr.map(e=>{
@@ -249,6 +284,34 @@ function showRest(id){
      document.getElementById("p2_"+id).innerHTML="&#x2795";
   };
 };
+function shutAll(){
+  document.getElementById('emoji').style.display="none";
+  document.getElementById("emoji_p").innerHTML="&#9998";
+  document.getElementById('time').style.display="none";
+  document.getElementById("time_p").innerHTML="&#9998";
+};
+function showOnly(that){
+  if (that=="emoji_p"){
+     if(document.getElementById('emoji').style.display=="none"){
+        shutAll();
+         document.getElementById('emoji').style.display="inline";
+         document.getElementById("emoji_p").innerHTML="🆗";
+      }else{
+          document.getElementById('emoji').style.display="none";
+            document.getElementById("emoji_p").innerHTML="&#9998";
+      };
+  };
+  if (that=="time_p"){
+     if(document.getElementById('time').style.display=="none"){
+         shutAll();
+         document.getElementById('time').style.display="inline";
+         document.getElementById("time_p").innerHTML="🆗";
+      }else{
+          document.getElementById('time').style.display="none";
+            document.getElementById("time_p").innerHTML="&#9998";
+      };
+  };
+};
 function change(){
   let b_url='"https://livewallpaperhd.com/wp-content/uploads/2017/08/Anime-Re-Zero-Wallpaper-Emilia.jpg"';
   document.body.style.backgroundImage =(document.body.style.backgroundImage=='url('+b_url+')')?'url(" ")':'url('+b_url+')';
@@ -329,4 +392,3 @@ function xmlToObj(xml){
   //console.log(xml.childNodes[0]);
 
 };
-//----

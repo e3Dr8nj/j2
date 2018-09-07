@@ -81,25 +81,49 @@ try{
 
 
 //-------------------------------------
+async function xml_body(obj,tagname){
+  let str_xml='<'+tagname+'>';
+    for(let key in obj){ str_xml+='<'+key+'>'; str_xml+=(obj[key]!='')?obj[key]:'undefined'; str_xml+='</'+key+'>'; };
+    str_xml+='</'+tagname+'>';
+  return str_xml;
+};
 async function createXML(obj2){
   let res="";
    let str_xml='<?xml version="1.0" encoding="UTF-8"?>\n';
   var d=new Date();
   str_xml+='<triggers data="'+d.toString()+'">\n';
-  
+  let setting_xml='<settings>\n';
   for(let key2 in obj2){
-    if(key2=="avtorization"){continue;};
-    
     let obj=obj2[key2];
+    if(key2=="emojis"){
+       //setting_xml+=obj2[key2]+'</settings>'; 
+       setting_xml+=await xml_body(obj,'emojis');
+        };
+    if(key2=="time"){
+       //setting_xml+=obj2[key2]+'</settings>'; 
+       setting_xml+=await xml_body(obj,'time');
+        };
+     
+    if(!Number(parseInt(key2[0])) ){continue;};
+    
+    
     if(obj.type=='del'){continue;};
     if((obj.w==''||obj.r==''||obj.w=='undefined'||obj.r=='undefined')&&(!(obj.type=='dq'||obj.type=='ds'))){obj.type='off';};
+    /*
     str_xml+='<trigger>';
     for(let key in obj){ str_xml+='<'+key+'>'; str_xml+=(obj[key]!='')?obj[key]:'undefined'; str_xml+='</'+key+'>'; };
     str_xml+='</trigger>';
-    
+    */
+    str_xml+=await xml_body(obj,'trigger');
   };
   str_xml+='</triggers>';
+  setting_xml+='</settings>';
 await fs.writeFile('./public/triggers.xml', str_xml, function (err) {
+  if (err) {console.log(err); res+=err.message;};
+  console.log('Saved!');
+   res+=" file save; ";
+});
+  await fs.writeFile('./public/setting.xml', setting_xml, function (err) {
   if (err) {console.log(err); res+=err.message;};
   console.log('Saved!');
    res+=" file save; ";
