@@ -105,6 +105,12 @@ async function createXML(obj2){
        setting_xml+=await xml_body(obj,'time');
         };
      if(key2=="a"){setting_xml+='<emojilevel>'+obj[0]+'</emojilevel>';};
+     if(key2=="default"){
+       setting_xml+='<default>';
+       setting_xml+='<ds>'+obj['ds']+'</ds>';
+       setting_xml+='<dq>'+obj['dq']+'</dq>';
+       setting_xml+='</default>';
+     };
     if(!Number(parseInt(key2[0]))&& key2[0]!='0' ){continue;};
     
     

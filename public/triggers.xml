@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<triggers data="Fri Sep 07 2018 17:27:43 GMT+0000 (UTC)">
+<triggers data="Sat Sep 08 2018 20:36:08 GMT+0000 (UTC)">
 <trigger><n>как_дела2</n><e>dzen</e><type>on</type><w>настороение, сам, ты , поживаешь,оно</w><q> как , ? </q><a>undefined</a><r>норм
 Жить можно. Точнее существовать.
 Никак.
-*рассказывает как*</r><s>undefined</s></trigger><trigger><n>ругательства</n><e>negative</e><type>on</type><w>туп,дур,глуп,даун,телка,баба,идиот</w><q>undefined</q><a>бот,ты</a><r>Я не #w ! Я отказываюсь думать!
+*рассказывает как*
+test2</r><s>undefined</s></trigger><trigger><n>ругательства</n><e>negative</e><type>on</type><w>туп,дур,глуп,даун,телка,баба,идиот</w><q>undefined</q><a>бот,ты</a><r>Я не #w ! Я отказываюсь думать!
 Засохни гербарий!
 Обидеть Лию может каждый, не каждый может убежать
 #m Дино, ты слышал?!
