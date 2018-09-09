@@ -331,26 +331,20 @@ function save(){
 
 //----------
 function loadSome2(){
-  
-
-  let fd;
-
-
-  
-  const Request=new XMLHttpRequest();
- 
-  
-Request.onreadystatechange=function(){
+ let fd;
+ const Request=new XMLHttpRequest();
+ Request.onreadystatechange=function(){
+  try{
    if(this.readyState==4 && this.status==200){
+
      let parser = new DOMParser();
- let xmlDoc = parser.parseFromString(this.responseText,"text/xml");
-     
-     //let xmlDoc=parseFromString();
+     let xmlDoc = parser.parseFromString(this.responseText,"text/xml");
      let x = xmlDoc.getElementsByTagName("trigger");
      //console.log(xmlDoc);
      let doc=this.responseXML;
      let txt="";
      let path="/triggers/trigger";
+     
       var nodes = doc.evaluate(path, doc, null, XPathResult.ANY_TYPE, null);
      var arr_obj=[];
      var result = nodes.iterateNext();
@@ -359,7 +353,6 @@ Request.onreadystatechange=function(){
            for(let i=0;i<result.childNodes.length;i++){
                newJXON[result.childNodes.item(i).nodeName]=result.childNodes.item(i).childNodes[0].nodeValue;
             };
-            
             result = nodes.iterateNext();
             console.log(newJXON);
             arr_obj.push(newJXON);
@@ -367,6 +360,30 @@ Request.onreadystatechange=function(){
     let triggers_arr= doc.getElementsByTagName("trigger");
      console.log(arr_obj);
      obj_arr_new=arr_obj;
+     
+     let settings_obj={};
+     let doc2=this.responseXML;
+     let path_settings="/triggers/settings";
+     let test=doc2.evaluate(path_settings,doc2,null,XPathResult.ANY_TYPE,null);
+      test=test.iterateNext();
+     
+     for(let i=1;i<test.childNodes.length;i++)  {
+       let i_node =test.childNodes[i];
+        settings_obj[i_node.nodeName]={};
+          for(let ii=0;ii<i_node.childNodes.length;ii++){
+            settings_obj[i_node.nodeName][i_node.childNodes[ii].nodeName]={};
+            let i_node2=i_node.childNodes[ii];
+            for(let iii=0;iii<i_node2.childNodes.length;iii++){
+               settings_obj[i_node.nodeName][i_node.childNodes[ii].nodeName]=i_node2.childNodes[0].nodeValue;
+            };
+          };
+       // console.log(test.childNodes[1].childNodes[i].childNodes[0].nodeValue);
+     };
+       
+       
+     
+    // settings_obj[test.childNodes[1].nodeName]=test.childNodes[1].nodeValue;
+     console.log(settings_obj);
      txt = generate(arr_obj);
      //console.log(triggers_arr[0]);
     // let r = JSON.parse(this.responseText);
@@ -377,7 +394,7 @@ Request.onreadystatechange=function(){
       
    };
      
-     
+  }catch(err){console.log(err);};     
    
 };
  Request.open("GET","/triggers.xml",true);

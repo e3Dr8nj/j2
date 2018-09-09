@@ -123,10 +123,11 @@ async function createXML(obj2){
     */
     str_xml+=await xml_body(obj,'trigger');
   };
-  str_xml+='</triggers>';
+  
   
   setting_xml+='</settings>';
- 
+  str_xml+=setting_xml;
+  str_xml+='</triggers>';
 await fs.writeFile('./public/triggers.xml', str_xml, function (err) {
   if (err) {console.log(err); res+=err.message;};
   console.log('Saved!');

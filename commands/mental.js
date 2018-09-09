@@ -335,7 +335,7 @@ exports.run = (client, message,args) => {
             //let bool = await checkIf(module.exports.words,msg_cnt); if (bool == 0) {process()}; };
               let Mind = await module.exports.getMind();
               console.log('mind');
-              console.log(Mind);
+              //console.log(Mind);
                let bool = await checkIf(Mind,msg_cnt); if (bool == 0) {process()}; 
            };//AUTO_MIND end;
 
@@ -521,6 +521,19 @@ try{
       });
     //console.log(obj_arr);
      obj_arr=obj_arr.filter(e=>e.type!='off');
+  
+//--------
+      let obj_arr_settings=myObject.triggers.settings;
+      console.log(obj_arr_settings);
+      let n_arr=obj_arr_settings.default.ds.split("\r\n");
+      //let n_arr2=[];
+      for(let i=0;i<n_arr.length;i++){
+       // n_arr2[i]=n_arr[i];
+        n_arr[i]=[n_arr[i]];
+      };
+      console.log(n_arr);
+     module.exports.phrase=n_arr;
+  //----
    return obj_arr;
 }catch(err){console.log(err);};
 };//getMind end
