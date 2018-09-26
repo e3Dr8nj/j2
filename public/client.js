@@ -1,7 +1,9 @@
 const testForm = document.forms[1];
 //function func(){prefentDefault();};
 document.addEventListener('mousewheel', null, {passive: true});
-
+let but_img = 'https://openclipart.org/image/150px/svg_to_png/168778/1331240791.png';
+//let but_img='https://st.depositphotos.com/1686288/3191/v/450/depositphotos_31919521-stock-illustration-transparent-glass-button.jpg';
+let but1_img = 'http://mir-tlt.ru/images/sait/knopki_logotipy/Aqua-Button.png';
 let glitch=true;
 let obj_arr_new="";
 function Obj(e){
@@ -61,7 +63,7 @@ function triggerConstructor(e,num){
          e.type=(e.type=="not set")?"on":e.type;
       // str2+='<hr>';
        str2+='<div id="'+e.id+'" name="trs">';
-       str2+='<div class="inv2" id="border2x'+e.id+'">'+'<hr><p id="p4_'+e.id+'" class="a_inl" onclick="show('+e.id+')">&#9998</p></div>';
+       str2+='<div class="inv2" id="border2x'+e.id+'">'+'<hr><p id="p4_'+e.id+'" class="a_inl" onclick="show('+e.id+')"><img height=30 width=30 src='+but_img+'></img></p></div>';
        str2+='<div class="inv2" id="trigg'+e.id+'">';
   
       str2+='<div id="id_number"class="inl" name="'+e.id+'[_id]" value=e.id>ID'+i +'    </div>';
@@ -74,7 +76,7 @@ function triggerConstructor(e,num){
        
        str2+='Слова (или их части) триггеры:<br>';
        str2+='</div>';
-       str2+='<p id="p3_'+e.id+'" class="a_inl" onclick="show('+e.id+')">&#9998</p><textarea name="'+e.id+'[w]" id="w'+e.id+'" rows="2" cols="120" >'+e.w+'</textarea><p id="p1_'+e.id+'" class="a_inl" onclick="showRestTriggers('+e.id+')">&#x2795</p><br>';
+       str2+='<p id="p3_'+e.id+'" class="a_inl" onclick="show('+e.id+')"><img height=30 width=30 src='+but_img+'></img></p><textarea name="'+e.id+'[w]" id="w'+e.id+'" rows="2" cols="120" >'+e.w+'</textarea><p id="p1_'+e.id+'" class="a_inl" onclick="showRestTriggers('+e.id+')">&#x2795</p><br>';
        str2+='<div class="inv" id="triggers'+e.id+'">';
        str2+='Все слова которые должны присутсвовать во входной фразе:<br><textarea name="'+e.id+'[q]" id="q'+e.id+'" row="2" cols="120">'+e.q+'</textarea><br>';
        str2+='Слова хотябы одно из которых должно присутствовать во входной фразе:<br><textarea name="'+e.id+'[a]" id="a'+e.id+'"  row="2" cols="120">'+e.a+'</textarea><br>';
@@ -109,9 +111,9 @@ function generate(obj_arr){
    str2+='<div value="0">Login:<textarea name="avtorization[login]"   rows="1" cols="30">Log</textarea> Password: <textarea name="avtorization[pass]"   rows="1" cols="30">qwerty</textarea></div>';
     
   str2+='<div id="settings">'; 
-  str2+='<p id="emoji_p" class="a_inl" onclick="showOnly(id)">&#9998</p>Эмоджи';
-  str2+='<p id="time_p" class="a_inl" onclick="showOnly(id)">&#9998</p>Время';
-  str2+='<p id="default_p" class="a_inl" onclick="showOnly(id)">&#9998</p>Дефолт. Триггеры';
+  str2+='<p id="emoji_p" class="a_inl" onclick="showOnly(id)"><img height=30 width=30 src='+but_img+'></img></p>Эмоджи';
+  str2+='<p id="time_p" class="a_inl" onclick="showOnly(id)"><img height=30 width=30 src='+but_img+'></img></p>Время';
+  str2+='<p id="default_p" class="a_inl" onclick="showOnly(id)"><img height=30 width=30 src='+but_img+'></img></p>Дефолт. Триггеры';
   
   str2+='<br><div id="emoji" class="emoji">';
   str2+=  list('emojis',emoji_select);
@@ -225,14 +227,15 @@ function show(id){
     document.getElementById("border2x"+id).style.display="inline";
     //if(document.getElementById("triggers"+id).style.display="none"){showRestTriggers(id);};
      document.getElementById("p3_"+id).innerHTML="";
-     document.getElementById("p4_"+id).innerHTML="🆗";
+     document.getElementById("p4_"+id).innerHTML='<img height=30 width=30 src='+but1_img+'></img>';;
+    //document.getElementById("p4_"+id).innerHTML="<img height=20 width=20 src='"+but_img+"'></img>";
   }else{
      if(document.getElementById("triggers"+id).style.display="inline"){showRestTriggers(id);};
      document.getElementById("trigg"+id).style.display="none";
      document.getElementById("trigg2x"+id).style.display="none";
     document.getElementById("border"+id).style.display="none";
     document.getElementById("border2x"+id).style.display="none";
-     document.getElementById("p3_"+id).innerHTML="&#9998";
+     document.getElementById("p3_"+id).innerHTML="<img height=30 width=30 src='"+but_img+"'></img>";
   };
 };
 function showRestTriggers(id){
@@ -259,8 +262,8 @@ function showRest(id){
   };
 };
 function shut(name){
-  document.getElementById(name).style.display="none";
-  document.getElementById(name+"_p").innerHTML="&#9998"; };
+   document.getElementById(name).style.display="none";
+  document.getElementById(name+"_p").innerHTML="<img height=30 width=30 src='"+but_img+"'></img>"; };
 function shutAll(){
   shut("emoji");
   shut("time");
@@ -270,10 +273,11 @@ function turn(name){
    if(document.getElementById(name).style.display=="none"){
          shutAll();
          document.getElementById(name).style.display="inline";
-         document.getElementById(name+"_p").innerHTML="🆗";
+         document.getElementById(name+"_p").innerHTML='<img height=30 width=30 src='+but1_img+'></img>';
       }else{
           document.getElementById(name).style.display="none";
-            document.getElementById(name+"_p").innerHTML="&#9998";
+            document.getElementById(name+"_p").innerHTML="<img height=30 width=30 src='"+but_img+"'></img>";
+          //document.getElementById(name+"_p").innerHTML="<img height=30 width=30 src='"+but_img+"'></img>";
       };
 };
 function showOnly(that){
@@ -282,10 +286,10 @@ function showOnly(that){
      if(document.getElementById('emoji').style.display=="none"){
         shutAll();
          document.getElementById('emoji').style.display="inline";
-         document.getElementById("emoji_p").innerHTML="🆗";
+         document.getElementById("emoji_p").innerHTML='<img height=30 width=30 src='+bu1t_img+'></img>';
       }else{
           document.getElementById('emoji').style.display="none";
-            document.getElementById("emoji_p").innerHTML="&#9998";
+            document.getElementById("emoji_p").innerHTML="<img height=30 width=30 src='"+but_img+"'></img>";
       };
       */
   };
@@ -294,10 +298,10 @@ function showOnly(that){
      if(document.getElementById('time').style.display=="none"){
          shutAll();
          document.getElementById('time').style.display="inline";
-         document.getElementById("time_p").innerHTML="🆗";
+         document.getElementById("time_p").innerHTML='<img height=30 width=30 src='+bu1t_img+'></img>';
       }else{
           document.getElementById('time').style.display="none";
-            document.getElementById("time_p").innerHTML="&#9998";
+            document.getElementById("time_p").innerHTML="<img height=30 width=30 src='"+but_img+"'></img>";
         
       };*/
       };
@@ -309,7 +313,7 @@ function showOnly(that){
   
 
 function change(){
-  let b_url='"https://livewallpaperhd.com/wp-content/uploads/2017/08/Anime-Re-Zero-Wallpaper-Emilia.jpg"';
+  let b_url="https://livewallpaperhd.com/wp-content/uploads/2017/08/Anime-Re-Zero-Wallpaper-Emilia.jpg";
   document.body.style.backgroundImage =(document.body.style.backgroundImage=='url('+b_url+')')?'url(" ")':'url('+b_url+')';
 
 };
