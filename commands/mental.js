@@ -1,6 +1,13 @@
 exports.glitch='true';
 exports.system={
-  
+  '476431736813912064':{
+                    CHANNELING:{
+                            CHANNELS:{},
+                            MEMBERS:{},
+                            ON:false  
+                                  }                     
+                 
+           },//my
 '301063859702071316':{
                     CHANNELING:{
                             CHANNELS:{},
@@ -82,7 +89,9 @@ try{
        let part1='';
         if(module.exports.glitch!='true'){
                console.log('win');  part1=arr[0].split('\r\n');
-       }else{console.log('glitch'); part1=arr[0].split('\n');};//for win else for glitch
+       }else{
+         console.log('glitch'); part1=arr[0].split('\n');
+       };//for win else for glitch
 //-----------------------------------
          part1.pop();
          for(var i=0;i<part1.length;i++){ 
@@ -100,8 +109,9 @@ try{
         };//for end
 //--------------------
      if(module.exports.glitch!='true'){
+          console.log('glitch');console.log(this.r);
           this.r=arr[1].trim().split('\r\n  ');
-     }else{this.r=arr[1].trim().split('\n  ');};//for win else for glitch  
+     }else{console.log('win');console.log(this.r); this.r=arr[1].trim().split('\n  '); };//for win else for glitch  
 //--------------------  
     //this.r.pop();
   };
@@ -510,12 +520,15 @@ try{
            if(key=="q"){ if(e[key].endsWith('.')){e[key]=e[key].slice(0,-1);}; e[key]=e[key].split(",")};
            if(key=="r"){
             if(typeof e[key]=='object'){e[key]='undefined';};
-           // e[key].replace("\\r\n\g,'\n'");
-             e[key]=e[key].split("\r\n")
+           // e[key].replace("\\r\n\g,'\n'"); 
+                //console.log(e[key]);
+                e[key]=e[key].split("\r\n")
            };
            if(key=="s"){
+             console.log(e[key]);
              //e[key].replace("\\r\n\g,'\n'");
-             e[key]=e[key].split("\r\n");};
+             e[key]=e[key].split("\r\n");
+           };
            if(e[key].length==1&&e[key][0]=='undefined'){e[key]=false;};
          };
       });

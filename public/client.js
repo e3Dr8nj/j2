@@ -39,10 +39,12 @@ function Obj(e){
 let empty_trigger={n:'',e:'undefined',w:'',q:'',a:'',r:'',s:'',type:'not set'};
 let type_select={off:"Выкл", on:"Вкл",del:"Удалить",ds:"На предложения",dq:"На вопросы"};
 let emoji_select={undefined:"Нету",snob:"Надменность",positive:"Позитив",negative:"Негатив",dzen:"Дзен",thinking:"Задумчивость",hello:"Приветливость",e5:"5э"};
-function list(tagname,val_obj){
-  let str="";
+function list(tagname,val_obj,obj){
+  let str=""; console.log(obj);
   for(let key in val_obj){
-     str+=val_obj[key]+':<textarea class="bl"  name="'+tagname+'['+key+']" rows="1" cols="100"></textarea>';
+    
+     let val =(obj[key])?obj[key]:'';
+     str+=val_obj[key]+':<textarea class="bl"  name="'+tagname+'['+key+']" rows="1" cols="100">'+val+'</textarea>';
   };
   return str;
 };
@@ -102,7 +104,8 @@ var emoji_level={1:"Холоднокровный(4э)",2:"Адекватный(3
 function get_e(a){
  return emoji_level[a];
 };
-function generate(obj_arr){
+function generate(obj_arr,settings_obj){
+  //console.log(obj_arr); console.log(settings_obj);
   let str2='';
    str2+='<form name="testForm" method="post" action="/addData" target="frame" oninput="emoji_x.value=get_e(parseInt(a.value))">';
     //str2+='<form name="testForm" method="post" action="/addData" target="frame" >';
@@ -116,8 +119,8 @@ function generate(obj_arr){
   str2+='<p id="default_p" class="a_inl" onclick="showOnly(id)"><img height=30 width=30 src='+but_img+'></img></p>Дефолт. Триггеры';
   
   str2+='<br><div id="emoji" class="emoji">';
-  str2+=  list('emojis',emoji_select);
-  str2+='Эмоциональность: <input type="range" class="range" id="a" name="a" value="3" min="1" max="5">';
+  str2+=  list('emojis',emoji_select,settings_obj.emojis);
+  str2+='Эмоциональность: <input type="range" class="range" id="a" name="a" value="'+settings_obj.a+'" min="1" max="5">';
   str2+=' <output name="emoji_x" for="a b"></output>';
   str2+='</div><br>';
   
@@ -125,14 +128,14 @@ function generate(obj_arr){
   
   
   str2+='<br><div id="time" class="time">';
-  str2+='Время ответа:<input class="bl" type="textarea" name="time[response]"></textarea>';
-  str2+='Посылка второй фразы через:<input class="bl" type="textarea" name="time[response2]"></textarea>';
+  str2+='Время ответа:<input class="bl" type="textarea" name="time[response]">'+settings_obj.time.response+'</textarea>';
+  str2+='Посылка второй фразы через:<input class="bl" type="textarea" name="time[response2]">'+settings_obj.time.response2+'</textarea>';
   str2+='</div>';
   
   str2+='<br><div id="default" class="default">';
  // str2+=  list('emojis',emoji_select);
-  str2+='Предложения:<textarea class="bl" type="textarea" name="default[ds]" rows="50" cols="120"></textarea>';
-  str2+='Вопросы:<textarea class="bl" type="textarea" name="default[dq]" rows="50" cols="120"></textarea>';
+  str2+='Предложения:<textarea class="bl" type="textarea" name="default[ds]" rows="50" cols="120">'+settings_obj.default.ds+'</textarea>';
+  str2+='Вопросы:<textarea class="bl" type="textarea" name="default[dq]" rows="50" cols="120">'+settings_obj.default.dq+'</textarea>';
   str2+='</div><br>';
   
   str2+='</div><br>';
@@ -282,28 +285,10 @@ function turn(name){
 };
 function showOnly(that){
   if (that=="emoji_p"){ turn("emoji");
-    /*
-     if(document.getElementById('emoji').style.display=="none"){
-        shutAll();
-         document.getElementById('emoji').style.display="inline";
-         document.getElementById("emoji_p").innerHTML='<img height=30 width=30 src='+bu1t_img+'></img>';
-      }else{
-          document.getElementById('emoji').style.display="none";
-            document.getElementById("emoji_p").innerHTML="<img height=30 width=30 src='"+but_img+"'></img>";
-      };
-      */
+    
   };
   if (that=="time_p"){ turn("time");
-    /*
-     if(document.getElementById('time').style.display=="none"){
-         shutAll();
-         document.getElementById('time').style.display="inline";
-         document.getElementById("time_p").innerHTML='<img height=30 width=30 src='+bu1t_img+'></img>';
-      }else{
-          document.getElementById('time').style.display="none";
-            document.getElementById("time_p").innerHTML="<img height=30 width=30 src='"+but_img+"'></img>";
-        
-      };*/
+    
       };
       
     if(that=="default_p"){turn("default");};
@@ -317,12 +302,6 @@ function change(){
   document.body.style.backgroundImage =(document.body.style.backgroundImage=='url('+b_url+')')?'url(" ")':'url('+b_url+')';
 
 };
-//function save(){
- // let fs =require("fs");
- // let mindBD=require('./mindBD');
- // mindBD.run();
- // document.getElementById("output").innerHTML="saved";
-//};
 
 
 function save(){
@@ -388,12 +367,8 @@ function loadSome2(){
      
     // settings_obj[test.childNodes[1].nodeName]=test.childNodes[1].nodeValue;
      console.log(settings_obj);
-     txt = generate(arr_obj);
-     //console.log(triggers_arr[0]);
-    // let r = JSON.parse(this.responseText);
-     //console.log(r);
-   // console.log(doc);
-    // console.log(txt);
+     txt = generate(arr_obj,settings_obj);
+     //- txt = generate(arr_obj);
      document.getElementById('pi').innerHTML=txt;
       
    };
@@ -410,3 +385,24 @@ function xmlToObj(xml){
   //console.log(xml.childNodes[0]);
 
 };
+
+function loadGreatings(){
+ let fd;
+ const Request=new XMLHttpRequest();
+ Request.onreadystatechange=function(){
+  try{
+   if(this.readyState==4 && this.status==200){
+    let val = confirm("Загрузить сраницу для редактирования приветствий (несохраненные данне будут утеряны!)");
+   // if(val==false) return;
+     console.log(val);
+    let txt = 'greating';
+   if(val){ document.getElementById('pi').innerHTML=txt;};
+
+   };
+  }catch(err){console.log(err);};     
+   
+};
+ Request.open("GET","/triggers.xml",true);
+ Request.send();
+
+};//

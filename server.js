@@ -104,7 +104,7 @@ async function createXML(obj2){
        //setting_xml+=obj2[key2]+'</settings>'; 
        setting_xml+=await xml_body(obj,'time');
         };
-     if(key2=="a"){setting_xml+='<emojilevel>'+obj[0]+'</emojilevel>';};
+     if(key2=="a"){setting_xml+='<a>'+obj+'</a>';};
      if(key2=="default"){
        setting_xml+='<default>';
        setting_xml+='<ds>'+obj['ds']+'</ds>';
@@ -179,10 +179,10 @@ client.on("message", (message) => {
    }else if (message.mentions.members.first().user.id==client.user.id)  {
       
         
-      if(message.guild.id=='301063859702071316'||message.guild.id=='476056002391834634'){
+      //if(message.guild.id=='301063859702071316'||message.guild.id=='476056002391834634'){
         args = message.content.slice().trim().split(/ +/g);
         args[0]='mental';
-      };//if ali
+     // };//if ali
         
    };
   
