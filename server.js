@@ -53,7 +53,8 @@ try{
      if(process.env["x_"+request.body.avtorization.login]!=request.body.avtorization.pass){
      console.log("wrong login or password");
      response.send("<style>h1 {color:red;}p {color:red;}</style><p>!Не верный логин/пароль </p>"); 
-     return;};
+     //return;
+     };
     
   async function ins(){
    let obj=request.body[0];

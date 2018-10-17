@@ -333,9 +333,14 @@ exports.run = (client, message,args) => {
 //---------------------------------------------
         async function clear(msg_cnt){
              let arr = ['?' , ',' , '!','.'];
-             for(var i=0;i<arr.length;i++){ let pos = msg_cnt.indexOf(arr[i]); if (pos!=-1){   msg_cnt = msg_cnt.split('?').join(' '+arr[i]+' '); };
-             console.log(msg_cnt);
-             return msg_cnt; };
+            console.log(msg_cnt);
+             msg_cnt=msg_cnt+'.';
+             for(var i=0;i<arr.length;i++){ 
+               let pos = msg_cnt.indexOf(arr[i]); if (pos!=-1){   msg_cnt = msg_cnt.split(arr[i]).join(' '+arr[i]+' '); };
+          //console.log(msg_cnt);
+             };console.log(msg_cnt);
+            //msg_cnt=msg_cnt.replace(/.|,|!/g, function (x) {return ' '+x+' ';}); console.log(msg_cnt);
+            return msg_cnt; 
         };//clear end
         async function AUTO_MIND(){
              if(message.content.startsWith(module.exports.global.AUTOMIND_DEAKTIVATE_PHRASE)){return;};
@@ -521,7 +526,7 @@ try{
            if(key=="r"){
             if(typeof e[key]=='object'){e[key]='undefined';};
            // e[key].replace("\\r\n\g,'\n'"); 
-                //console.log(e[key]);
+                console.log(e[key]);
                 e[key]=e[key].split("\r\n")
            };
            if(key=="s"){

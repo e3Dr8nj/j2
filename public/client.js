@@ -1,9 +1,12 @@
 const testForm = document.forms[1];
 //function func(){prefentDefault();};
 document.addEventListener('mousewheel', null, {passive: true});
-let but_img = 'https://openclipart.org/image/150px/svg_to_png/168778/1331240791.png';
+//let but_img = 'https://openclipart.org/image/150px/svg_to_png/168778/1331240791.png';
 //let but_img='https://st.depositphotos.com/1686288/3191/v/450/depositphotos_31919521-stock-illustration-transparent-glass-button.jpg';
-let but1_img = 'http://mir-tlt.ru/images/sait/knopki_logotipy/Aqua-Button.png';
+//let but1_img = 'https://cdn.glitch.com/b605b291-f7af-45c5-b322-275954b8c53e%2FAqua-Button.png?1538662676152';
+//let but1_img='http://sacredgeometryweb.com/wp-content/uploads/2018/03/hyperCubeAn8.gif';
+let but_img='http://danyclockworker.ru/img/arrow.png';
+let but1_img='https://icon-icons.com/icons2/1238/PNG/512/arrowpointingup_83680.png';
 let glitch=true;
 let obj_arr_new="";
 function Obj(e){
@@ -299,7 +302,9 @@ function showOnly(that){
 
 function change(){
   let b_url="https://livewallpaperhd.com/wp-content/uploads/2017/08/Anime-Re-Zero-Wallpaper-Emilia.jpg";
-  document.body.style.backgroundImage =(document.body.style.backgroundImage=='url('+b_url+')')?'url(" ")':'url('+b_url+')';
+  console.log(document.body.style.backgroundImage);
+  //document.body.style.backgroundImage =(document.body.style.backgroundImage=='url('+b_url+')')?'url(" ")':'url('+b_url+')';
+  document.body.style.backgroundImage =(document.body.style.backgroundImage=='')?'url('+b_url+')':'';
 
 };
 
