@@ -40,7 +40,7 @@ function Obj(e){
     //this.r.pop();
   };
 let empty_trigger={n:'',e:'undefined',w:'',q:'',a:'',r:'',s:'',type:'not set'};
-let type_select={off:"Выкл", on:"Вкл",del:"Удалить",ds:"На предложения",dq:"На вопросы"};
+let type_select={off:"Выкл", on:"Вкл",del:"Удалить"};
 let emoji_select={undefined:"Нету",snob:"Надменность",positive:"Позитив",negative:"Негатив",dzen:"Дзен",thinking:"Задумчивость",hello:"Приветливость",e5:"5э"};
 function list(tagname,val_obj,obj){
   let str=""; console.log(obj);
@@ -309,12 +309,12 @@ function change(){
 };
 
 
-function save(){
+//function save(){
   
   
   
 
-};
+//};
 
 
 //----------

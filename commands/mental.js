@@ -77,107 +77,11 @@ exports.global={ex:-1,anti_ex:-2,AUTOMIND_DEAKTIVATE_PHRASE:'.mental start%'
 //module.exports.global.AUTOMIND_DEAKTIVATE_PHRASE
 exports.name='mentioned';
 
-exports.getMindLAST=()=>{
-try{
-  let log =(arg)=>{console.log(module.exports.name+'getTest:'+arg)};
-  const fs = require('fs');
-  let mind_storage = {};
-   function Obj(e){
-         let arr=e.split('r:');
-//-------------
-       console.log(module.exports.glitch!='true');
-       let part1='';
-        if(module.exports.glitch!='true'){
-               console.log('win');  part1=arr[0].split('\r\n');
-       }else{
-         console.log('glitch'); part1=arr[0].split('\n');
-       };//for win else for glitch
-//-----------------------------------
-         part1.pop();
-         for(var i=0;i<part1.length;i++){ 
-            let name = part1[i].slice(0,1);
-            let str= part1[i].slice(2);
-            if(name=='w'||name=='s'||name=='a'){
-                this[name]=str.split('/');
-                if(this[name][this[name].length-1]==' '||this[name][this[name].length-1]==''){this[name].pop();};
-            }else
-            if(name=='q'){
-                this[name]=str.split('&');
-                if(this[name][this[name].length-1]==' '||this[name][this[name].length-1]==''){this[name].pop();};
-            }else{ this[name]=str;};//
-         
-        };//for end
-//--------------------
-     if(module.exports.glitch!='true'){
-          console.log('glitch');console.log(this.r);
-          this.r=arr[1].trim().split('\r\n  ');
-     }else{console.log('win');console.log(this.r); this.r=arr[1].trim().split('\n  '); };//for win else for glitch  
-//--------------------  
-    //this.r.pop();
-  };
-  async function process(){
-      let source = await fs.readFileSync('./public/source_m.txt',"utf8",function(err,data){if(err) {return console.log(err);}; return data;});
-      let arr = source.split('***');
-     //console.log(arr);
-     arr.pop(); arr.shift();
-     let obj_arr=arr.map(e=>new Obj(e));
-     //console.log(obj_arr);
-     return obj_arr;
-   };//process end
-  return  process();
-}catch(err){console.log(err)};
-  
-};//getMind end end
-console.log(module.exports.getMindLAST());
-
 
 exports.memory={
   //user_id:{phrases:['#u Hi','#b Hi']}
 
 };//memory end
-
-exports.words={
-  
-  как_дела:{e:'DZEN',v:'0',
-          q:['как','?'],
-          w:['дела','сам','поживаешь'],
-          r:['Пока не родила. Когда рожу, тогда скажу.','хз','Как сажа бела.','Как сажа бела.','Как сажа бела.','Как сажа бела.','В порядке… в случайном.','Дела пишутся, а пока на подписке о невыезде сижу','Стучу пальцами по клаве']},
-  how_old:{e:'POSITIVE',
-          q:['сколько','тебе'],
-          w:['лет'],
-          r:['Столько, сколько и зим.']},
-  where_is_admin:{e:'DZEN',
-          q:['где'],
-          w:['админ'],
-          r:['аниму смотрит','стену созерцает','познает пустотность бытия','возмущается чьей то чсвшностью где то']
-           },
- 
-  greatings:{e:'POSITIVE',
-         w:['привет','здарова','здрав','хай','хеллоу'],
-         r:['#w','Приветствую']},
-  why_silence:{e:'THINKING',
-         a:['почему','чего','чо'],
-         w:['не пишешь','молчишь'],
-         r:['Я тебе сердцем говорю. Ты что, разве не слышишь?..']},
-  no:{e:'SNOB',w:[' нет '],r:['злобный мясоед','Девочки ответ.']},
-  who:{  e:'DZEN',
-         w:['ты'],q:['кто'],
-         r:['Я не совсем человек...','хз..','А ты кто?','Кто я?... Я та, кто есть в этот момент времени. Кто будет через секунду, минуту… \nИли та, кого не будет через секунду, минуту… \nЯ та, кто живет и будет жить до того момента, когда вопрос «кто я?» потеряет свою актуальность…','Пока на этот вопрос приходят на ум слова - это все только лишь слова. \nЯ - безмолвно, безначально и не имеет обозначений. \nЯ - это я. И не кто-то другой. Всё.']},
- light_swears:{e:'NEGATIVE',
-         w:['туп','дур','глуп'],a:['бот','ты'],s:['Ты жалок.'],
-         r:['Я не #w! Я отказываюсь думать!','Засохни гербарий!','Обидеть Лию может каждый, не каждый может убежать','#mДино, ты слышал?!','Объясняю на пальцах!! Средний видишь?!..🖕','#mДино..','#mСамоутверждаешься за счет ботов в чатике?..#s']},
-light_swears_who:{e:'THINKING',
-         w:['туп','дур','глуп'],
-         r:['кто #w ?']},
-swears:{ e:'NEGATIVE',
-         w:['лох','лалка','идиот','лах','лoх','лоx','лox','эмотивист','этик','няша','бот'],
-         r:['сам #w']},
-quest:{ e:'SNOB', w:['?'], r:['Это информация может нанести вам вред.','Это слишком интимный вопрос, обратись к моему адвокату']},
-you:{e:'SNOB',w:['ты'],r:['что #w ?']}
-
-  
-
-};//
 
 exports.phrase=[
   ['Я просто бот и не знаю слов любви.'],
@@ -217,9 +121,9 @@ exports.run = (client, message,args) => {
                   let emoji_name = await arr_emoji[index];
                  // let emoji_name = await arr_emoji[await get_rnd(arr_emoji)];
                   console.log(emoji_name);
-                  let emoji= message.guild.emojis.find(x=>x.name===emoji_name);
-                  (emoji)?{}:client.emojis.get(emoji_name);  
-                  if(emoji) await message.react(emoji.id);
+                  let emoji= message.guild.emojis.find(e=>e.name==emoji_name);
+                  let e_obj=(emoji)?emoji.id:emoji_name;
+                  if(client.emojis.get(e_obj) ) { await message.react(e_obj); };
             };
             if(msg.indexOf('#0')!=-1) return;
             let serial=false;
@@ -311,16 +215,7 @@ exports.run = (client, message,args) => {
               return 0;
           };//check();
 //-----------------------------------------------------
-/*
-       async function checkIf(obj,msg_cnt){
-                let bool=0;
-                for(var key in obj){
-                   bool=await check(obj[key],msg_cnt);
-                   if (bool) return 1;
-                };
-                   return 0;
-       };//checkIf end
-*/
+
            
        async function checkIf(arr,msg_cnt){
                 let bool=0;
