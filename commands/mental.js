@@ -82,7 +82,7 @@ exports.memory={
   //user_id:{phrases:['#u Hi','#b Hi']}
 
 };//memory end
-exports.emoji={};
+exports.emojis={};
 exports.phrase=[
   ['Я просто бот и не знаю слов любви.'],
   ['Если хочешь, могу оттипировать тебя полностью за просто так.\n пс: узнать подробнее можно с помощью команды .help'],
@@ -115,6 +115,7 @@ exports.run = (client, message,args) => {
   };  //async end
   async function typing_delay(msg,obj,delay_time){
             if(obj&&obj.o){await message.react(obj.o)};
+    /*
             if(obj&&obj.e && module.exports.system.EMOJI_NAME[message.guild.id]&&module.exports.system.EMOJI_NAME[message.guild.id][obj.e.toUpperCase()]){
                   let arr_emoji = module.exports.system.EMOJI_NAME[message.guild.id][obj.e.toUpperCase()];
                   let index = (obj.v)?obj.v:await get_rnd(arr_emoji);
@@ -124,6 +125,22 @@ exports.run = (client, message,args) => {
                   let emoji= message.guild.emojis.find(e=>e.name==emoji_name);
                   let e_obj=(emoji)?emoji.id:emoji_name;
                   if(client.emojis.get(e_obj) ) { await message.react(e_obj); };
+            };
+            */
+    console.log(module.exports.emojis);
+    if(obj&&obj.e && module.exports.emojis[obj.e]){console.log('1ssst');
+                  let arr_emoji = module.exports.emojis[obj.e];
+                  let index = (obj.v)?obj.v:await get_rnd(arr_emoji);
+                  let emoji_name = await arr_emoji[index];
+                 // let emoji_name = await arr_emoji[await get_rnd(arr_emoji)];
+                  console.log(emoji_name);
+                  let emoji= message.guild.emojis.find(e=>e.name==emoji_name);
+                  let e_obj=(emoji)?emoji.id:emoji_name;
+                 // if(client.emojis.has(e_obj) )  
+               try{
+                    await message.react(e_obj); 
+               }catch(err){console.log(err)};
+                  //};
             };
             if(msg.indexOf('#0')!=-1) return;
             let serial=false;
@@ -318,9 +335,9 @@ try{
        
      };
      
-module.exports.emoji=new_obj;
+module.exports.emojis=await new_obj;
      console.log('emoji');
-     console.log(module.exports.emoji);
+     console.log(module.exports.emojis);
      
   //----
    return obj_arr;
