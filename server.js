@@ -19,7 +19,7 @@ const config = {};
 config.prefix=".";
 client.lang=1;
 client.prefix=".";
-
+client.translation=false;
 
 
 

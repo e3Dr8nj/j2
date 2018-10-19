@@ -82,7 +82,7 @@ exports.memory={
   //user_id:{phrases:['#u Hi','#b Hi']}
 
 };//memory end
-exports.emoji={};
+
 exports.phrase=[
   ['Я просто бот и не знаю слов любви.'],
   ['Если хочешь, могу оттипировать тебя полностью за просто так.\n пс: узнать подробнее можно с помощью команды .help'],
@@ -250,13 +250,151 @@ exports.run = (client, message,args) => {
            };//AUTO_MIND end;
 
 //---------------------------------------------------------
-  let AUTOMIND=!(client.translation);
+  let AUTOMIND=!(module.exports.system[message.guild.id].CHANNELING.ON=='true');
  if( !AUTOMIND&&message.mentions.members.first()!=undefined && message.mentions.members.first().user.id==client.user.id){
+      module.exports.system[message.guild.id].CHANNELING.CHANNELS['>']=message.channel;
+      module.exports.system[message.guild.id].CHANNELING.MEMBERS['>']=message.author;
       return;
 }else{AUTO_MIND();};
           //AUTO_MIND();
+//--------------------------------------------CHANNELING
+//let delay =(duration)=> new Pomise(resolve=>{setTimeout(resolve,duration)});
+ async function help(){
+
+let str='Введите >$1пробел$2пробел текст сообщения \n$1-[id/имя/символы привязки канала] \n$2-[id/никнейм/дискриминатор/символы привязки участника] \n(все параметры без квадратных скобочек), \nдля установки привязки введите >.setпробел$1пробел$пробел$3 \n$1-[c(для установки канала)/m(для установки участника)] \n$2-[символы привязки] \n$3[значение(для канала: id/название)/для участника: id/никнейм/дискриминатор] \n При упоминание бота символ > автоматически привязывается к каналу запроса и участнику (>>пробел>пробел текст сообщения - ответ участнику от имени бота) \n Используйте [.] вместо параметра участника для отправки сообщения на канал без упоминания пользователя';
+let msg = await message.channel.send(str);
+await msg.react('✔');
+let filter =(reaction,user)=>(reaction.name='✔'&&user!=client.user);
+await msg.awaitReactions(filter,{max:1,time:1*60*1000,errors:['time']}).then(collected=>{
+    
+    if(collected) return;
+}).catch(err=>{console.log(err); return ;});
+//await delay(3*60*1000);
+await msg.delete();
+
+};//help end
+
+  function getChannel(cnl_val,err_msg){
+       console.log('getChannel');
+      let is_numb = Number.isInteger(Number(cnl_val));
+      let cnl1='';
+                   if(is_numb){
+                                console.log('may be it is ID , try get..' );
+                                cnl1 = message.guild.channels.get(cnl_val);
+                                console.log(!!cnl1);
+                    }else{
+                                console.log('try get channel by  name');
+                                cnl1 = message.guild.channels.find(x => x.name === cnl_val);
+                                console.log(!!cnl1);
+
+                     };
+               console.log('getChannels end');
+
+               return cnl1;
+   };//getChannel end
+   function getMember(mmb_val){
+       console.log('getMember');
+      let is_numb = Number.isInteger(Number(mmb_val));
+      let mmb1='';
+                   if(is_numb){
+                                console.log('may be it is ID or discriminator, try get..' );
+ mmb1 =(mmb_val>100000)?message.guild.members.get(mmb_val):message.guild.members.find(m=>{return m.user.discriminator==mmb_val; });
+                                console.log(!!mmb1);
+                    }else{
+                                console.log('try get user by user name');
+                                mmb1 = message.guild.members.find(m=>{return m.user.username==mmb_val; });
+                                console.log(!!mmb1);
+
+                     };
+               
+               console.log(!!mmb1);
+               return mmb1;
+   };//getMember end
+
+  function set(msg_cnt_arr){let what = msg_cnt_arr[1];
+                    if(what!='c'&&what!='m'){message.channel.send('Такого параметра не существует, допустимые параметры [с] - канал; [m] - участник ');return true;};
+                 let aliase=msg_cnt_arr[2];
+                   if(!aliase){message.channel.send('Символы привязки не заданы, допустимые символы для [c]-все кроме пробела [.] и [set]; для [m] - все кроме пробела');return true;}else if( (what=='c'&&(aliase=='.set'||aliase=='>'||aliase=='.help'||aliase=='.end'||aliase=='.delete'))||(what=='m'&&(aliase=='>'&&aliase=='.')) ){message.channel.send('Недопустимые символы, допустимы все кроме пробела [>] ,[.set],[.help],[.end],[.delete] для канала и все кроме пробела [.],[>] для участника'); return true;};
+                   
+                 let value =msg_cnt_arr[3];
+                   if(!value){message.channel.send('Значение привязки не задано, допустимые значения для [c] - id канала или название; для [m] -id участника, ник или дискриминатор');return true;};
+                 if(what=="c"){
+                        console.log('it is channel'+' aliase'+aliase+' value'+value);
+                        let cnl_ = getChannel(value);
+                         if(!cnl_) {message.channel.send('Канал  '+ aliase +' не определен, возможно вы задали не правильные id или имя канала'); return true;};
+                         module.exports.system[message.guild.id].CHANNELING.CHANNELS[aliase]=cnl_;
+                        console.log( module.exports.system[message.guild.id].CHANNELING.CHANNELS[aliase]);  
+                          message.channel.send('Канал ' +cnl_.name +' привязан к символам '+aliase+' Теперь можете использовать эти символы для указания канала отправки сообщения, помимо его id или названия');
+                         //return true;
+                        }else
+                  if(what=="m"){  
+                          console.log('it is member'+' aliase'+aliase+' value'+value);
+
+                            //let member_= getMember(value); 
+                            //  console.log('member is find '+!!member);
+                         let mmb_ = getMember(value);
+                         
+                         if(!mmb_) {message.channel.send('Участник '+ aliase +' не определен, возможно вы не верно задали id, ник или дискриминатор пользователя'); return true;};
+                          module.exports.system[message.guild.id].CHANNELING.MEMBERS[aliase]= mmb_;
+                          console.log( module.exports.system[message.guild.id].CHANNELING.MEMBERS[aliase]);  
+                          message.channel.send('Участник ' +mmb_.user.username +' привязан к символам '+aliase+' Теперь можете использовать эти символы для упоминания пользователя, помимо его id, ника или дискриминатора');
+                         // return true;
+                  };
+                 return true;};//set end
+  async function translate(){
+try{
+    let bool=true;
+    
+    let channel=message.channel;
+    let filter=m=>m.content.startsWith('>');
+    console.log('startAwaiting');
+    bool=await channel.awaitMessages(filter,{max:1,time:10*60*1000,errors:['time']}).then(collected=>{
+           let msg_cnt = collected.first().content;
+            console.log(msg_cnt.content);
+             let msg_cnt_arr = msg_cnt.trim().split(/ +/g);
+            console.log(msg_cnt_arr);
+           if(msg_cnt.startsWith('>.help')){help(); return true;};
+           if(msg_cnt.startsWith('>.end')){ return false;};
+           if(msg_cnt.startsWith('>.delete')){ module.exports.system.SET_DEFAULT(message.guild.id); message.channel.send('Привязки каналов и пользователей удалены.');return true;};
+           if(msg_cnt.startsWith('>.set')){
+                 return set(msg_cnt_arr);
+             };//if set
+           let args_str = msg_cnt_arr[0];
+           let chl_num=args_str.slice(1); 
+           let mmb_alias=msg_cnt_arr[1];           
+           let chnl= module.exports.system[message.guild.id].CHANNELING.CHANNELS[chl_num];
+           if(!chnl){chnl = getChannel(chl_num);};
+           if(!chnl) {message.channel.send('Канал '+chl_num+' не определен'); return true;};
+           console.log(msg_cnt_arr[1]);
+           let new_msg_cnt = msg_cnt_arr.slice(2).join(' ');
+            console.log(new_msg_cnt);
+           if(mmb_alias!='.'){
+              let mmb= module.exports.system[message.guild.id].CHANNELING.MEMBERS[mmb_alias];
+              if(!mmb){mmb = getMember(mmb_alias);};
+              if(!mmb) {message.channel.send('Участник '+mmb_alias+' не определен'); return true;};
+              chnl.send(mmb+' '+new_msg_cnt);
+           }else{ chnl.send(new_msg_cnt);};
+           return true;
+   }).catch(err=>{console.log(err);return false;});
+     return bool;
   }catch(err){console.log(err);};
-        };//run end
+   };//translate end
+   async function CHANNELING(){
+            
+    message.channel.send('Сеанс трансляции сообщений начался. Авто мышление бота отключено. \nВедите >.help для справки >.end для завершения процесса (время ожидания ответа где то 10 мин)');
+             let bool=true;
+             console.log('start');
+             while(bool){
+              bool=await translate();
+             };
+              module.exports.system[message.guild.id].CHANNELING.ON='false';
+              message.channel.send('Время ожидания ответа истекло, трансляция остановлена, автомышление возобновлено.');
+      };//CHANNELING END
+          if (message.content.startsWith(module.exports.global.AUTOMIND_DEAKTIVATE_PHRASE)){ module.exports.system[message.guild.id].CHANNELING.ON='true';CHANNELING();};
+//-----------------------------------------------
+         }catch(err){console.log(err);}
+  
+};
 //---------------------
 exports.getMind=async()=>{
 try{
@@ -308,21 +446,19 @@ try{
       };
       console.log(n_arr);
      module.exports.phrase=n_arr;
-  
-     let new_obj={};
-     for(let key in obj_arr_settings.emojis){
-       
-       if(key!='undefined'&&obj_arr_settings.emojis[key]!='undefined'){
-         new_obj[key]=obj_arr_settings.emojis[key].split(',');
-       };
-       
-     };
-     
-module.exports.emoji=new_obj;
-     console.log('emoji');
-     console.log(module.exports.emoji);
-     
   //----
    return obj_arr;
 }catch(err){console.log(err);};
 };//getMind end
+    
+
+//------------------------------add end
+
+
+
+
+
+
+
+
+

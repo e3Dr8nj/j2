@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<triggers data="Wed Oct 17 2018 19:08:00 GMT+0000 (UTC)">
+<triggers data="Fri Oct 19 2018 21:36:29 GMT+0000 (UTC)">
 <trigger><n>как_дела2</n><e>dzen</e><type>on</type><w>настороение, сам, ты , поживаешь,оно, дела .</w><q> как .</q><a>undefined</a><r>норм
 Жить можно. Точнее существовать.
 Никак.
@@ -57,5 +57,5 @@ test3
  Что да?
   </r><s>undefined</s></trigger><trigger><n>undefined</n><e>undefined</e><type>on</type><w>привет</w><q>undefined</q><a>undefined</a><r>привет2
 привет3</r><s>undefined</s></trigger><settings>
-<emojis><undefined>1</undefined><snob>undefined</snob><positive>undefined</positive><negative>undefined</negative><dzen>undefined</dzen><thinking>undefined</thinking><hello>undefined</hello><e5>undefined</e5></emojis><a>3</a><time><response>undefined</response><response2>undefined</response2></time><default><ds>1
+<emojis><undefined>1</undefined><snob>undefined</snob><positive>undefined</positive><negative>undefined</negative><dzen>undefined</dzen><thinking>undefined</thinking><hello>🖐</hello><e5>undefined</e5></emojis><a>3</a><time><response>undefined</response><response2>undefined</response2></time><default><ds>1
 ef</ds><dq>df</dq></default></settings></triggers>
