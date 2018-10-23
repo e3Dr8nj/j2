@@ -1,94 +1,13 @@
 exports.glitch='true';
 exports.system={
-  '476431736813912064':{
-                    CHANNELING:{
-                            CHANNELS:{},
-                            MEMBERS:{},
-                            ON:false  
-                                  }                     
-                 
-           },//my
-'301063859702071316':{
-                    CHANNELING:{
-                            CHANNELS:{},
-                            MEMBERS:{},
-                            ON:false  
-                                  }                     
-                 
-           },//NEO
-'476056002391834634':{
-                    CHANNELING:{
-                            CHANNELS:{},
-                            MEMBERS:{},
-                            ON:false  
-                                  }                     
-                 
-           },//MY
-  '476679721854173184':{
-                    CHANNELING:{
-                            CHANNELS:{},
-                            MEMBERS:{},
-                            ON:false  
-                                  }                     
-                 
-           },//MY2
    TYPING_TIME:3*1000,
- //  EMOJI_NAME:{S:'1527964715080'}
-   EMOJI_NAME:{
-          
-          '476056002391834634':{
-                   NEGATIVE:['1527964715080'],
-                   POSITIVE:['1527964715080'],
-                   SNOB:['1527964715080'],
-                   DZEN:['1527964715080'],
-                   THINKING:['1527964715080'] ,
-                   HELLO:['1527964715080']  }, 
-
-
-//S:'1527964715080',
-          DEFAULT_2:{HELLO:['smile'],
-                   NEGATIVE:['angry','disappointed'],
-                   POSITIVE:['slight_smile','upside_down','smile'],
-                   SNOB:['thinking'],
-                //   NEITRAL:[],
-                   DZEN:['neutral_face'],
-                   THINKING:['thinking']
-                   },
-          '301063859702071316':{ 
-                 HELLO:['28','🖐','🤘'],
-                 NEGATIVE:['👆','42', '5_', '26','21','35','smile','smile','smile','smile','smile'],
-                   POSITIVE:['28','smile','smile','smile','smile'],
-                   SNOB:['lia', '48', '40','smile','smile','smile','smile','smile','smile','smile'],
-                   //NEITRAL:[],
-                   DZEN:['33','13','smile','smile','smile','smile','smile','smile','smile','smile'],
-                   THINKING:['1_','smile','smile','smile','smile']  
-                 
-                  }
-
-
-    },
-SET_DEFAULT:function(id){
-         module.exports.system[id].CHANNELING.CHANNELS={};
-         module.exports.system[id].CHANNELING.MEMBERS={};
-    }
-};//
+ };//
 exports.global={ex:-1,anti_ex:-2,AUTOMIND_DEAKTIVATE_PHRASE:'.mental start%'
 };
-//module.exports.global.AUTOMIND_DEAKTIVATE_PHRASE
+
 exports.name='mentioned';
 
-
-exports.memory={
-  //user_id:{phrases:['#u Hi','#b Hi']}
-
-};//memory end
 exports.emojis={};
-exports.phrase=[
-  ['Я просто бот и не знаю слов любви.'],
-  ['Если хочешь, могу оттипировать тебя полностью за просто так.\n пс: узнать подробнее можно с помощью команды .help'],
-  [' \nОтрадно спать – отрадней ботом быть \nО, в этот век – преступный и постыдный \n– Не жить, не чувствовать – удел завидный...\nПрошу: молчи – не смей меня будить.'],
-['Ты пишешь мне какие-то слова.']
-];
 
 exports.run = (client, message,args) => {
         try{
@@ -115,20 +34,9 @@ exports.run = (client, message,args) => {
   };  //async end
   async function typing_delay(msg,obj,delay_time){
             if(obj&&obj.o){await message.react(obj.o)};
-    /*
-            if(obj&&obj.e && module.exports.system.EMOJI_NAME[message.guild.id]&&module.exports.system.EMOJI_NAME[message.guild.id][obj.e.toUpperCase()]){
-                  let arr_emoji = module.exports.system.EMOJI_NAME[message.guild.id][obj.e.toUpperCase()];
-                  let index = (obj.v)?obj.v:await get_rnd(arr_emoji);
-                  let emoji_name = await arr_emoji[index];
-                 // let emoji_name = await arr_emoji[await get_rnd(arr_emoji)];
-                  console.log(emoji_name);
-                  let emoji= message.guild.emojis.find(e=>e.name==emoji_name);
-                  let e_obj=(emoji)?emoji.id:emoji_name;
-                  if(client.emojis.get(e_obj) ) { await message.react(e_obj); };
-            };
-            */
+    
     console.log(module.exports.emojis);
-    if(obj&&obj.e && module.exports.emojis[obj.e]){console.log('1ssst');
+    if(obj&&obj.e && module.exports.emojis[obj.e]){
                   let arr_emoji = module.exports.emojis[obj.e];
                   let index = (obj.v)?obj.v:await get_rnd(arr_emoji);
                   let emoji_name = await arr_emoji[index];
@@ -254,6 +162,7 @@ exports.run = (client, message,args) => {
             //msg_cnt=msg_cnt.replace(/.|,|!/g, function (x) {return ' '+x+' ';}); console.log(msg_cnt);
             return msg_cnt; 
         };//clear end
+
         async function AUTO_MIND(){
              if(message.content.startsWith(module.exports.global.AUTOMIND_DEAKTIVATE_PHRASE)){return;};
              let msg_cnt=message.content.toLowerCase()+' ';
@@ -274,6 +183,8 @@ exports.run = (client, message,args) => {
           //AUTO_MIND();
   }catch(err){console.log(err);};
         };//run end
+
+
 //---------------------
 exports.getMind=async()=>{
 try{
@@ -301,12 +212,15 @@ try{
             if(typeof e[key]=='object'){e[key]='undefined';};
            // e[key].replace("\\r\n\g,'\n'"); 
                 console.log(e[key]);
-                e[key]=e[key].split("\r\n")
+                //e[key]=e[key].split("\r\n")
+             if(e[key].indexOf('/r/n/r')){console.log('/r/n/r----------------------------------');
+       }else if(e[key].indexOf('/r/n')){console.log('/r/n----------------------');}
+             e[key]=e[key].trim().split('\r\n');
            };
            if(key=="s"){
              console.log(e[key]);
              //e[key].replace("\\r\n\g,'\n'");
-             e[key]=e[key].split("\r\n");
+             e[key]=e[key].trim().split("\r\n");
            };
            if(e[key].length==1&&e[key][0]=='undefined'){e[key]=false;};
          };
